@@ -22,13 +22,13 @@ class App extends Component {
 			oldScript && oldScript.remove();
 
 			let head = document.getElementsByTagName('head')[0];
-      let script = document.createElement('script');
+			let script = document.createElement('script');
 
-      script.type = 'text/javascript';
-      script.src = 'https://files.coinmarketcap.com/static/widget/currency.js';
+			script.type = 'text/javascript';
+			script.src = 'https://files.coinmarketcap.com/static/widget/currency.js';
 			script['data-id'] = 'cmcloader';
 
-      head.appendChild(script);
+			head.appendChild(script);
 		}
 	}
 
@@ -80,9 +80,9 @@ class App extends Component {
 		return coins;
 	}
 
-  render() {
-    return (
-      <div className="App">
+	render() {
+		return (
+			<div className="App">
 				<Row>
 					<Menu onChoice={this.addChoice} />
 					<Col m={9}>
@@ -94,9 +94,9 @@ class App extends Component {
 						</div>
 					</Col>
 				</Row>
-      </div>
-    );
-  }
+			</div>
+		);
+	}
 }
 
 export default App;

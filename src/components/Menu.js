@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Card, Col } from 'react-materialize';
-import axios from 'axios';
-import cheerio from 'cheerio';
-import $ from 'jquery';
+import request from 'async-request';
 
 
 
@@ -15,10 +13,7 @@ export default class Menu extends Component {
 		this.renderCoins = this.renderCoins.bind(this);
 
 		this.state = {
-			choices: [
-				'litecoin',
-				'wagerr'
-			]
+			choices: []
 		};
 	}
 
@@ -30,16 +25,12 @@ export default class Menu extends Component {
 		this.props.onChoice(coin);
 	}
 
-	retrieveCoins() {
-		$.ajax({
-			method: 'GET',
-			crossDomain: true,
-			url: 'http://localhost:3000/retrieveList'
-		})
-		.then((coins) => {
-			this.setState({
-				choices: coins
-			});
+	async retrieveCoins() {
+		let res = await request('http://localhost:3000/retrieveList');
+		let coins = JSON.parse(res.body);
+
+		this.setState({
+			choices: coins
 		});
 	}
 
@@ -47,8 +38,12 @@ export default class Menu extends Component {
 		return this.state.choices.map(coin => {
 			return coin.name && <li key={`list-item-${coin.name}`}>
 				<Card className='blue-grey darken-1'
-					onClick={this.handleClick.bind(this, coin)}
-					title={coin.name}/>
+					onClick={this.handleClick.bind(this, coin)}>
+					<h3>
+						<img src={coin.image} alt={`${coin.name} logo`}/>
+						<span>{coin.name}</span>
+					</h3>
+				</Card>
 			</li>;
 		});
 	}

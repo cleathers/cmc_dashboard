@@ -12,7 +12,9 @@ router.get('/retrieveList', async (ctx) => {
 	let coinList = coins.map(($coin, idx) => {
 		return $coin.children.reduce((targets, childEl) => {
 			if (childEl.type === 'tag' && childEl.name === 'img') {
-				targets.image = childEl.attribs.src;
+				let src = childEl.attribs.src;
+				let image = src.replace(/16/g, 32);
+				targets.image = image;
 			}
 
 			if (childEl.type === 'tag' && childEl.name === 'a') {

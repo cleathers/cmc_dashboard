@@ -5,9 +5,7 @@
   "proxy": "http://localhost:8080/",
   "dependencies": {
     "async-request": "^1.2.0",
-    "axios": "^0.16.2",
     "cheerio": "^1.0.0-rc.2",
-    "jquery": "^3.2.1",
     "koa": "^2.3.0",
     "koa-router": "^7.2.1",
     "koa-static": "^4.0.1",
@@ -15,8 +13,7 @@
     "react-dom": "^15.6.1",
     "react-materialize": "^1.0.5",
     "react-scripts": "1.0.10",
-    "request": "^2.81.0",
-    "request-promise": "^4.2.1"
+    "request": "^2.81.0"
   },
   "scripts": {
     "start": "react-scripts start",
