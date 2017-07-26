@@ -8,6 +8,7 @@ class App extends Component {
 		super(props);
 
 		this.addChoice = this.addChoice.bind(this);
+		this.removeChoice = this.removeChoice.bind(this);
 		this.renderChoices = this.renderChoices.bind(this);
 
 		this.state = {
@@ -59,6 +60,18 @@ class App extends Component {
 
 	}
 
+	removeChoice(coin) {
+		let coins = Object.assign({}, this.state.coins);
+		delete coins[coin.name];
+
+		localStorage.coins = JSON.stringify(coins);
+
+		this.setState({
+			coins,
+			loaded: false
+		});
+	}
+
 	renderChoices() {
 		let coins = Object.keys(this.state.coins).map((coinName) => {
 			let props = {
@@ -84,7 +97,11 @@ class App extends Component {
 		return (
 			<div className="App">
 				<Row>
-					<Menu onChoice={this.addChoice} />
+					<Menu
+						chosen={this.state.coins}
+						onRemoval={this.removeChoice}
+						onAdd={this.addChoice}
+					/>
 					<Col m={9}>
 						<div className="coin-grid">
 							{!Object.keys(this.state.coins).length &&

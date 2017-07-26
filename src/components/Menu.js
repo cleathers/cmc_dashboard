@@ -8,9 +8,10 @@ export default class Menu extends Component {
 	constructor(props) {
 		super(props);
 
-		this.handleClick = this.handleClick.bind(this);
+		this.handleAddition = this.handleAddition.bind(this);
 		this.retrieveCoins = this.retrieveCoins.bind(this);
 		this.renderCoins = this.renderCoins.bind(this);
+		this.renderChosenCoins = this.renderChosenCoins.bind(this);
 
 		this.state = {
 			choices: []
@@ -21,8 +22,12 @@ export default class Menu extends Component {
 		this.retrieveCoins();
 	}
 
-	handleClick(coin, event) {
-		this.props.onChoice(coin);
+	handleAddition(coin) {
+		this.props.onAdd(coin);
+	}
+
+	handleRemoval(coin) {
+		this.props.onRemoval(coin);
 	}
 
 	async retrieveCoins() {
@@ -34,25 +39,55 @@ export default class Menu extends Component {
 		});
 	}
 
+	renderChosenCoins() {
+		return this.state.choices
+			.filter(coin => !!this.props.chosen[coin.name])
+			.map(coin => {
+				return coin.name && <li
+					onClick={this.handleRemoval.bind(this, coin)}
+					key={`list-item-${coin.name}`}>
+						<h3>
+							<img src={coin.image} alt={`${coin.name} logo`}/>
+						</h3>
+				</li>;
+			});
+	}
+
 	renderCoins() {
-		return this.state.choices.map(coin => {
-			return coin.name && <li key={`list-item-${coin.name}`}>
-				<Card className='blue-grey darken-1'
-					onClick={this.handleClick.bind(this, coin)}>
-					<h3>
-						<img src={coin.image} alt={`${coin.name} logo`}/>
-						<span>{coin.name}</span>
-					</h3>
-				</Card>
-			</li>;
-		});
+		return this.state.choices
+			.filter(coin => !this.props.chosen[coin.name])
+			.map(coin => {
+				let className = 'deep-purple darken-4';
+
+				return coin.name && <li key={`list-item-${coin.name}`}>
+					<Card className={className}
+						onClick={this.handleAddition.bind(this, coin)}>
+						<h3>
+							<img src={coin.image} alt={`${coin.name} logo`}/>
+							<span>{coin.name}</span>
+						</h3>
+					</Card>
+				</li>;
+			});
 	}
 
 	render() {
+		let chosenKeys = Object.keys(this.props.chosen);
 		return <Col m={3}>
+			{!!chosenKeys.length &&
+				<span>Click to remove choices</span>
+			}
+			<ul className="chosen-coin-list">
+				{this.renderChosenCoins()}
+			</ul>
+			<span>Add cryptos below</span>
 			<ul className="coin-list">
 				{this.renderCoins()}
 			</ul>
 		</Col>
 	}
 }
+
+Menu.defaultProps = {
+	chosen: {}
+};
