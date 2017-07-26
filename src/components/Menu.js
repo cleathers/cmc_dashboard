@@ -57,7 +57,7 @@ export default class Menu extends Component {
 		return this.state.choices
 			.filter(coin => !this.props.chosen[coin.name])
 			.map(coin => {
-				let className = 'deep-purple darken-4';
+				let className = 'amber lighten-3';
 
 				return coin.name && <li key={`list-item-${coin.name}`}>
 					<Card className={className}
