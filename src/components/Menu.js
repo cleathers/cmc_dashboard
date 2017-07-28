@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, Col } from 'react-materialize';
+import { Card } from 'react-materialize';
 import request from 'async-request';
 
 
@@ -46,9 +46,7 @@ export default class Menu extends Component {
 				return coin.name && <li
 					onClick={this.handleRemoval.bind(this, coin)}
 					key={`list-item-${coin.name}`}>
-						<h3>
-							<img src={coin.image} alt={`${coin.name} logo`}/>
-						</h3>
+						<img src={coin.image} alt={`${coin.name} logo`}/>
 				</li>;
 			});
 	}
@@ -57,34 +55,36 @@ export default class Menu extends Component {
 		return this.state.choices
 			.filter(coin => !this.props.chosen[coin.name])
 			.map(coin => {
-				let className = 'amber lighten-3';
+				let className = 'green lighten-5';
 
-				return coin.name && <li key={`list-item-${coin.name}`}>
-					<Card className={className}
-						onClick={this.handleAddition.bind(this, coin)}>
-						<h3>
+				return coin.name && <li
+					onClick={this.handleAddition.bind(this, coin)}
+					className="collection-item"
+					key={`list-item-${coin.name}`}>
 							<img src={coin.image} alt={`${coin.name} logo`}/>
 							<span>{coin.name}</span>
-						</h3>
-					</Card>
 				</li>;
 			});
 	}
 
 	render() {
 		let chosenKeys = Object.keys(this.props.chosen);
-		return <Col m={3}>
-			{!!chosenKeys.length &&
-				<span>Click to remove choices</span>
-			}
-			<ul className="chosen-coin-list">
-				{this.renderChosenCoins()}
-			</ul>
-			<span>Add cryptos below</span>
-			<ul className="coin-list">
-				{this.renderCoins()}
-			</ul>
-		</Col>
+		return <div className={"menu" + (!chosenKeys.length ? ' no-choices' : '')}>
+			<div className='chosen-coin-list'>
+				{!!chosenKeys.length &&
+					<span>Click logo to remove</span>
+				}
+				<ul>
+					{this.renderChosenCoins()}
+				</ul>
+			</div>
+			<div className="coin-list">
+				<span>Add cryptos below</span>
+				<ul className="collection">
+					{this.renderCoins()}
+				</ul>
+			</div>
+		</div>
 	}
 }
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Col, Row } from 'react-materialize';
 import './App.css';
 import Menu from './components/Menu.js';
+import Footer from './components/Footer.js';
 
 class App extends Component {
 	constructor(props) {
@@ -96,21 +97,21 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<Row>
-					<Menu
-						chosen={this.state.coins}
-						onRemoval={this.removeChoice}
-						onAdd={this.addChoice}
-					/>
-					<Col m={9}>
-						<div className="coin-grid">
-							{!Object.keys(this.state.coins).length &&
-								<p>Add some coins by clicking them on the left :)</p>
-							}
-							{this.renderChoices()}
-						</div>
-					</Col>
-				</Row>
+				<div className="main">
+						<Menu
+							chosen={this.state.coins}
+							onRemoval={this.removeChoice}
+							onAdd={this.addChoice}
+						/>
+
+							<div className="coin-grid">
+								{!Object.keys(this.state.coins).length &&
+									<p>Add some coins by clicking them on the left :)</p>
+								}
+								{this.renderChoices()}
+							</div>
+				</div>
+				<Footer />
 			</div>
 		);
 	}
