@@ -14,7 +14,7 @@ app.use(mount(router.routes()));
 const PUBLIC_DIR = process.env.PUBLIC_DIR || __dirname + '/build';
 app.use(mount('/', require('koa-static')(PUBLIC_DIR)))
 
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 
 app.listen(PORT);
 console.log(`server listening on port ${PORT}`);
