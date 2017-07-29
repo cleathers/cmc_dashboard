@@ -31,7 +31,7 @@ export default class Menu extends Component {
 	}
 
 	retrieveCoins() {
-		let res = request('http://localhost:3000/retrieveList')
+		let res = request(`${document.location.href}retrieveList`)
 			.then((body) => {
 				let coins = JSON.parse(body);
 
