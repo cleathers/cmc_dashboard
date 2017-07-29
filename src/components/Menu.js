@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'react-materialize';
-import request from 'async-request';
+import request from 'request-promise';
 
 
 
@@ -30,13 +30,15 @@ export default class Menu extends Component {
 		this.props.onRemoval(coin);
 	}
 
-	async retrieveCoins() {
-		let res = await request('http://localhost:3000/retrieveList');
-		let coins = JSON.parse(res.body);
+	retrieveCoins() {
+		let res = request('http://localhost:3000/retrieveList')
+			.then((body) => {
+				let coins = JSON.parse(body);
 
-		this.setState({
-			choices: coins
-		});
+				this.setState({
+					choices: coins
+				});
+			});
 	}
 
 	renderChosenCoins() {
