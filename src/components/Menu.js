@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Card } from 'react-materialize';
 import request from 'request-promise';
 
 
@@ -31,7 +30,7 @@ export default class Menu extends Component {
 	}
 
 	retrieveCoins() {
-		let res = request(`${document.location.href}retrieveList`)
+		request(`${document.location.href}retrieveList`)
 			.then((body) => {
 				let coins = JSON.parse(body);
 
@@ -57,8 +56,6 @@ export default class Menu extends Component {
 		return this.state.choices
 			.filter(coin => !this.props.chosen[coin.name])
 			.map(coin => {
-				let className = 'green lighten-5';
-
 				return coin.name && <li
 					onClick={this.handleAddition.bind(this, coin)}
 					className="collection-item"

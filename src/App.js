@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Col, Row } from 'react-materialize';
 import './App.css';
 import Menu from './components/Menu.js';
 import Footer from './components/Footer.js';
