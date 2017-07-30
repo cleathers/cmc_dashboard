@@ -19,10 +19,6 @@
 	grid-template-rows: 0 100%;
 }
 
-footer {
-	z-index: 1;
-}
-
 .coin-grid {
 	display: grid;
  	grid-template-columns: repeat(3, 1fr);
@@ -62,4 +58,24 @@ footer {
 
 .chosen-coin-list ul li {
 	cursor: pointer;
+}
+
+// Footer
+footer {
+	z-index: 1;
+}
+
+.page-footer .footer-copyright {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.page-footer a {
+	display: flex;
+	align-items: center;
+}
+
+.page-footer img {
+	margin-right: 1em;
 }
