@@ -11,9 +11,11 @@ export default class Menu extends Component {
 		this.retrieveCoins = this.retrieveCoins.bind(this);
 		this.renderCoins = this.renderCoins.bind(this);
 		this.renderChosenCoins = this.renderChosenCoins.bind(this);
+		this.handleSearch = this.handleSearch.bind(this);
 
 		this.state = {
-			choices: []
+			choices: [],
+			currentSearch: ''
 		};
 	}
 
@@ -27,6 +29,14 @@ export default class Menu extends Component {
 
 	handleRemoval(coin) {
 		this.props.onRemoval(coin);
+	}
+
+	handleSearch(e) {
+		let searchTerm = e.target.value;
+
+		this.setState({
+			currentSearch: searchTerm
+		});
 	}
 
 	retrieveCoins() {
@@ -53,8 +63,16 @@ export default class Menu extends Component {
 	}
 
 	renderCoins() {
+		let { currentSearch } = this.state;
+
 		return this.state.choices
-			.filter(coin => !this.props.chosen[coin.name])
+			.filter(coin => {
+				let isChosen = this.props.chosen[coin.name];
+				let shouldMatch = currentSearch.length > 0;
+				let isMatch = !!coin.name.match(currentSearch);
+
+				return shouldMatch ? !isChosen && isMatch : !isChosen;
+			})
 			.map(coin => {
 				return coin.name && <li
 					onClick={this.handleAddition.bind(this, coin)}
@@ -79,6 +97,7 @@ export default class Menu extends Component {
 			</div>
 			<div className="coin-list">
 				<span>Add cryptos below</span>
+				<input type="text" onChange={this.handleSearch} value={this.state.currentSearch} />
 				<ul className="collection">
 					{this.renderCoins()}
 				</ul>
